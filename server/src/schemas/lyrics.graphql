@@ -1,0 +1,11 @@
+type Lyrics {
+  id: ID!
+  likes: Int
+  content: String
+  song: Song
+}
+
+type Mutation {
+  addLyrics(content: String!, songID: ID!): Song
+  likeLyrics(id: ID!): Lyrics
+}

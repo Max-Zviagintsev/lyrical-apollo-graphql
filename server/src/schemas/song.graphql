@@ -1,0 +1,14 @@
+type Song {
+  id: ID!
+  title: String!
+  lyrics: [Lyrics]
+}
+
+type Songs {
+  songs: [Song]
+}
+
+type Mutation {
+  addSong(title: String!): Song
+  deleteSong(id: ID!): Song
+}

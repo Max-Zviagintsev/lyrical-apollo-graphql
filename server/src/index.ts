@@ -1,41 +1,21 @@
-import { ApolloServer } from '@apollo/server';
+import { ApolloServer, BaseContext } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
+import { typeDefs } from './schemas/typeDefs.ts';
+import { resolvers } from './resolvers/resolvers.ts';
+interface Context {
+  token?: string;
+}
 
-const typeDefs = `
-  type Book {
-    title: String
-    author: String
-  }
-
-  type Query {
-    books: [Book]
-  }
-`;
-
-const books = [
-  {
-    title: 'The Awakening',
-    author: 'Kate Chopin',
-  },
-  {
-    title: 'City of Glass',
-    author: 'Paul Auster',
-  },
-];
-
-const resolvers = {
-  Query: {
-    books: () => books,
-  },
-};
-
-const server = new ApolloServer({
+const server = new ApolloServer<Context>({
   typeDefs,
   resolvers,
 });
 
 const { url } = await startStandaloneServer(server, {
   listen: { port: 4000 },
+  context: async ({ req }): Promise<BaseContext> => ({
+    token: req.headers.authorization || '', // Example: Passing auth token
+  }),
 });
 
 console.log(`🚀  Server ready at: ${url}`);

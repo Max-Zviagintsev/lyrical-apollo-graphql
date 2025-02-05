@@ -1,0 +1,5 @@
+type Query {
+  song(id: ID!): Song
+  songs: [Song]
+  lyrics(id: ID!): Lyrics
+}
