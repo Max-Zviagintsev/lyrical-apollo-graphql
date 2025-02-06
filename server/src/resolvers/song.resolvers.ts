@@ -5,15 +5,16 @@ import {
   Song,
   SongQueryArgs,
 } from './types.ts';
+
 const songResolvers = {
   Query: {
     song: ((parent, { id }): Song | null => {
       return { id, title: 'Example song', lyrics: [] };
     }) as ResolverFunction<SongQueryArgs, Song | null>,
 
-    songs: () => {
+    songs: ((): Song[] | null => {
       return [{ id: '123', title: 'Example song', lyrics: [] }];
-    },
+    }) as ResolverFunction<null, Song | null>,
   },
 
   Mutation: {
