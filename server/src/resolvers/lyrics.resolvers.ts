@@ -1,26 +1,42 @@
-import {
-  ResolverFunction,
-  Lyrics,
-  LyricsQueryArgs,
-  AddLyricsArgs,
-  LikeLyricsArgs,
-} from './types.ts';
+import LyricsModel from '../models/lyrics.model.ts';
+import { Lyrics } from '../types.ts';
 
 const lyricsResolvers = {
   Query: {
-    lyrics: ((parent, { id }): Lyrics | null => {
-      return { id, content: 'Example lyrics', likes: 10 };
-    }) as ResolverFunction<LyricsQueryArgs, Lyrics | null>,
+    lyrics: async (_: unknown, id: string): Promise<Lyrics | null> => {
+      try {
+        const lyrics = await LyricsModel.findById(id);
+        if (!lyrics) {
+          throw new Error('Song not found');
+        }
+        return lyrics;
+      } catch (error) {
+        console.error('Error fetching song:', error);
+        throw new Error('Failed to fetch song');
+      }
+    },
   },
 
   Mutation: {
-    addLyrics: ((parent, { content, songID }): Lyrics => {
-      return { id: '123', content, likes: 0 };
-    }) as ResolverFunction<AddLyricsArgs, Lyrics>,
+    addLyrics: async (
+      _: unknown,
+      args: { id: string; content: string }
+    ): Promise<Lyrics> => {
+      try {
+        const newLyrics = new LyricsModel({
+          id: args.id,
+          content: args.content,
+        });
 
-    likeLyrics: ((parent, { id }): Lyrics => {
-      return { id, content: 'Liked lyrics', likes: 100 };
-    }) as ResolverFunction<LikeLyricsArgs, Lyrics>,
+        const savedLyrics = await newLyrics.save();
+        return savedLyrics;
+      } catch (error) {
+        console.error('Error adding lyrics:', error);
+        throw new Error('Failed to add lyrics');
+      }
+    },
+
+    likeLyrics: () => {},
   },
 };
 

@@ -1,5 +1,5 @@
 import { useQuery } from '@apollo/client'
-import { FETCH_SONGS } from '../../api/queries/fetchSongs'
+import { FETCH_SONGS } from '../../api/queries/songQueries'
 import { ListItem } from './StyledComponents'
 import { Song } from '../../types'
 

@@ -8,3 +8,7 @@ export interface Song {
   id: string
   title: string
 }
+
+export interface SongCreateBody {
+  title: string
+}
