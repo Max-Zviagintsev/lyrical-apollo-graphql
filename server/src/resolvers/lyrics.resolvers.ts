@@ -18,25 +18,20 @@ const lyricsResolvers = {
   },
 
   Mutation: {
-    addLyrics: async (
-      _: unknown,
-      args: { id: string; content: string }
-    ): Promise<Lyrics> => {
+    likeLyrics: async (_: unknown, id: string) => {
       try {
-        const newLyrics = new LyricsModel({
-          id: args.id,
-          content: args.content,
-        });
-
-        const savedLyrics = await newLyrics.save();
-        return savedLyrics;
+        const lyrics = await LyricsModel.findById(id);
+        if (!lyrics) {
+          throw new Error('Lyrics not found');
+        }
+        lyrics.likes += 1;
+        const updatedLyrics = await lyrics.save();
+        return updatedLyrics;
       } catch (error) {
-        console.error('Error adding lyrics:', error);
-        throw new Error('Failed to add lyrics');
+        console.error('Error liking lyrics:', error);
+        throw new Error('Failed to like lyrics');
       }
     },
-
-    likeLyrics: () => {},
   },
 };
 

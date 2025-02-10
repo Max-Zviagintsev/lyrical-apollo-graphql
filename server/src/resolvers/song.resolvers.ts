@@ -1,4 +1,5 @@
 import SongModel from '../models/song.model.ts';
+import LyricsModel from '../models/lyrics.model.ts';
 import { Lyrics, Song } from '../types.ts';
 
 const songResolvers = {
@@ -54,6 +55,28 @@ const songResolvers = {
       } catch (error) {
         console.error('Error deleting song:', error);
         throw new Error('Failed to delete song');
+      }
+    },
+    addLyrics: async (
+      _: unknown,
+      args: { id: string; content: string }
+    ): Promise<Lyrics> => {
+      try {
+        const song = await SongModel.findById(args.id);
+        if (!song) {
+          throw new Error('Song not found');
+        }
+        const newLyrics = new LyricsModel({
+          content: args.content,
+          song,
+        });
+        song.lyrics.push(newLyrics);
+        const savedLyrics = await newLyrics.save();
+        await song.save();
+        return savedLyrics;
+      } catch (error) {
+        console.error('Error adding lyrics:', error);
+        throw new Error('Failed to add lyrics');
       }
     },
   },
