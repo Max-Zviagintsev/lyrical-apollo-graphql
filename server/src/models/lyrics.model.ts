@@ -3,10 +3,6 @@ const { Schema, model } = mongoose;
 import { Lyrics } from '../types.ts';
 
 const lyricsSchema = new Schema<Lyrics>({
-  id: {
-    type: String,
-    required: true,
-  },
   content: {
     type: String,
     required: true,

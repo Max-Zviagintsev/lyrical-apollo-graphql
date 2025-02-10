@@ -3,10 +3,6 @@ const { Schema, model } = mongoose;
 import { Song } from '../types.ts';
 
 const songSchema = new Schema<Song>({
-  id: {
-    type: String,
-    required: true,
-  },
   title: {
     type: String,
     required: true,
