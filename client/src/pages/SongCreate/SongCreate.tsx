@@ -1,10 +1,11 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { useNavigate } from 'react-router'
 import { useMutation } from '@apollo/client'
 import { ADD_SONG } from '../../api/mutations/songMutations'
+import { FETCH_SONGS } from '../../api/queries/songQueries'
 import {
   FormRow,
   Label,
-  StyledInput,
   Button,
   Wrapper,
   Heading,
@@ -14,7 +15,14 @@ import { SongCreateBody } from '../../types'
 
 const SongCreate = () => {
   const { register, handleSubmit } = useForm<SongCreateBody>()
-  const [addSong, { loading, error }] = useMutation(ADD_SONG)
+  const navigate = useNavigate()
+
+  const [addSong, { loading, error }] = useMutation(ADD_SONG, {
+    refetchQueries: [FETCH_SONGS, 'FetchSongs'],
+    onCompleted() {
+      navigate('/')
+    },
+  })
 
   const onSubmit: SubmitHandler<SongCreateBody> = (title) => {
     addSong({ variables: title })
@@ -30,7 +38,7 @@ const SongCreate = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormRow>
           <Label htmlFor="title">Song title</Label>
-          <StyledInput type="text" id="title" {...register('title')} />
+          <input type="text" id="title" {...register('title')} />
         </FormRow>
 
         <Button type="submit">Submit</Button>

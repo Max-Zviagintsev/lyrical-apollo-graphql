@@ -15,7 +15,7 @@ export const FormRow = styled.div`
 export const Label = styled.label`
   margin-right: 15px;
 `
-export const StyledInput = styled.input``
+
 export const Button = styled.button`
   margin-top: 15px;
   padding: 5px 15px;

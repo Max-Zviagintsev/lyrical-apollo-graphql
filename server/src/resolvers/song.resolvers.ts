@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import SongModel from '../models/song.model.ts';
 import LyricsModel from '../models/lyrics.model.ts';
 import { Lyrics, Song } from '../types.ts';
@@ -45,13 +46,15 @@ const songResolvers = {
         throw new Error('Failed to add song');
       }
     },
-    deleteSong: async (_: unknown, id: string): Promise<boolean> => {
+    deleteSong: async (_: unknown, id: string): Promise<string> => {
       try {
-        const result = await SongModel.findByIdAndDelete(id);
+        const { ObjectId } = mongoose.Types;
+        const objectId = new ObjectId(id);
+        const result = await SongModel.findByIdAndDelete(objectId);
         if (!result) {
           throw new Error('Song not found');
         }
-        return true;
+        return id;
       } catch (error) {
         console.error('Error deleting song:', error);
         throw new Error('Failed to delete song');
