@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { Link } from 'react-router'
 
-export const Wrapper = styled.div`
+export const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   width: fit-content;
@@ -10,6 +10,12 @@ export const Wrapper = styled.div`
 export const Heading = styled.h1`
   font-size: 22px;
 `
+export const LinkButton = styled(Link)`
+  margin-top: 15px;
+  margin-left: auto;
+  color: var(--font-color);
+`
+
 export const FormRow = styled.div`
   display: flex;
   align-items: center;
@@ -37,9 +43,4 @@ export const Button = styled.button`
     box-shadow: 1px 1px 2px 2px var(--button-color);
   }
   cursor: pointer;
-`
-export const LinkButton = styled(Link)`
-  margin-top: 15px;
-  margin-left: auto;
-  color: var(--font-color);
 `

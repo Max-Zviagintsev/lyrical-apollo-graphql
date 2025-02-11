@@ -8,7 +8,7 @@ export type ResolverFunction<Args, ReturnType> = (
 export interface Lyrics {
   id: string;
   content: string;
-  likes: number;
+  likes?: number;
 }
 
 export interface Song {

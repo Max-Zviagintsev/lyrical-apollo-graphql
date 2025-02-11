@@ -1,11 +1,10 @@
 type Lyrics {
   id: ID!
+  content: String!
   likes: Int
-  content: String
   song: Song
 }
 
 type Mutation {
-  addLyrics(content: String!, songID: ID!): Song
   likeLyrics(id: ID!): Lyrics
 }

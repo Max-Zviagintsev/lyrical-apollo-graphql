@@ -3,6 +3,8 @@ import SongModel from '../models/song.model.ts';
 import LyricsModel from '../models/lyrics.model.ts';
 import { Lyrics, Song } from '../types.ts';
 
+const { ObjectId } = mongoose.Types;
+
 const songResolvers = {
   Query: {
     songs: async (): Promise<Song[]> => {
@@ -16,7 +18,9 @@ const songResolvers = {
     },
     song: async (_: unknown, id: string): Promise<Song | null> => {
       try {
-        const song = await SongModel.findById(id).populate('lyrics');
+        const objectId = new ObjectId(id);
+        const song = await SongModel.findById(objectId).populate('lyrics');
+
         if (!song) {
           throw new Error('Song not found');
         }
@@ -48,9 +52,9 @@ const songResolvers = {
     },
     deleteSong: async (_: unknown, id: string): Promise<string> => {
       try {
-        const { ObjectId } = mongoose.Types;
         const objectId = new ObjectId(id);
         const result = await SongModel.findByIdAndDelete(objectId);
+
         if (!result) {
           throw new Error('Song not found');
         }
@@ -62,10 +66,12 @@ const songResolvers = {
     },
     addLyrics: async (
       _: unknown,
-      args: { id: string; content: string }
+      args: { songId: string; content: string }
     ): Promise<Lyrics> => {
       try {
-        const song = await SongModel.findById(args.id);
+        const objectId = new ObjectId(args.songId);
+        const song = await SongModel.findById(objectId);
+
         if (!song) {
           throw new Error('Song not found');
         }
@@ -74,6 +80,7 @@ const songResolvers = {
           song,
         });
         song.lyrics.push(newLyrics);
+
         const savedLyrics = await newLyrics.save();
         await song.save();
         return savedLyrics;

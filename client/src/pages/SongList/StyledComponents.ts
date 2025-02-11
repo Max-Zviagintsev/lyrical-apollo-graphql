@@ -47,3 +47,8 @@ export const LinkButton = styled(Link)`
     box-shadow: 1px 1px 2px 2px var(--button-color);
   }
 `
+export const Title = styled(Link)`
+  cursor: pointer;
+  color: var(--font-color);
+  text-decoration: none;
+`

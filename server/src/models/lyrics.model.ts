@@ -9,7 +9,6 @@ const lyricsSchema = new Schema<Lyrics>({
   },
   likes: {
     type: Number,
-    required: true,
   },
 });
 

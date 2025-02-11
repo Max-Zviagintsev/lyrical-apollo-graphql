@@ -10,6 +10,7 @@ import {
   Wrapper,
   Heading,
   LinkButton,
+  StyledInput,
 } from './StyledComponents'
 import { SongCreateBody } from '../../types'
 
@@ -38,7 +39,7 @@ const SongCreate = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormRow>
           <Label htmlFor="title">Song title</Label>
-          <input type="text" id="title" {...register('title')} />
+          <StyledInput type="text" id="title" {...register('title')} />
         </FormRow>
 
         <Button type="submit">Submit</Button>

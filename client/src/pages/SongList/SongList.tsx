@@ -8,6 +8,7 @@ import {
   ListItem,
   LinkButton,
   DeleteIcon,
+  Title,
 } from './StyledComponents'
 import { Song } from '../../types'
 
@@ -26,7 +27,7 @@ function SongList() {
 
   const listItems = data.songs.map(({ id, title }: Song) => (
     <ListItem key={id}>
-      {title}
+      <Title to={`/songs/${id}`}>{title}</Title>
       <DeleteIcon onClick={() => handleDelete(id)} />
     </ListItem>
   ))
