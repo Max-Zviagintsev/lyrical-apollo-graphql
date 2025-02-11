@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { Link } from 'react-router'
+import ThumbUpIcon from '@mui/icons-material/ThumbUp'
 
 export const PageWrapper = styled.div`
   display: flex;
@@ -15,15 +16,10 @@ export const LinkButton = styled(Link)`
   margin-left: auto;
   color: var(--font-color);
 `
-
 export const FormRow = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 15px;
-`
-export const Label = styled.label`
-  margin-right: 15px;
-  text-wrap: nowrap;
 `
 export const StyledInput = styled.input`
   width: 100%;
@@ -43,4 +39,13 @@ export const Button = styled.button`
     box-shadow: 1px 1px 2px 2px var(--button-color);
   }
   cursor: pointer;
+`
+export const LyricsWrapper = styled.div`
+  display: flex;
+`
+export const Text = styled.div`
+  margin-right: 15px;
+`
+export const LikeIcon = styled(ThumbUpIcon)`
+  color: var(--button-color);
 `

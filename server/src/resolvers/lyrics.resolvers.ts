@@ -1,5 +1,8 @@
+import mongoose from 'mongoose';
 import LyricsModel from '../models/lyrics.model.ts';
 import { Lyrics } from '../types.ts';
+
+const { ObjectId } = mongoose.Types;
 
 const lyricsResolvers = {
   Query: {
@@ -20,11 +23,18 @@ const lyricsResolvers = {
   Mutation: {
     likeLyrics: async (_: unknown, id: string) => {
       try {
-        const lyrics = await LyricsModel.findById(id);
+        const objectId = new ObjectId(id);
+        const lyrics = await LyricsModel.findById(objectId);
+
         if (!lyrics) {
           throw new Error('Lyrics not found');
         }
-        lyrics.likes += 1;
+
+        if (lyrics.likes) {
+          lyrics.likes += 1;
+        } else {
+          lyrics.likes = 1;
+        }
         const updatedLyrics = await lyrics.save();
         return updatedLyrics;
       } catch (error) {

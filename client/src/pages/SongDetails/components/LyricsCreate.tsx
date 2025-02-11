@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useMutation } from '@apollo/client'
-import { FormRow, Label, StyledInput, Button } from '../StyledComponents'
+import { FormRow, StyledInput, Button } from '../StyledComponents'
 import { ADD_LYRICS } from '../../../api/mutations/lyricsMutations'
 import { AddLyricsBody } from '../../../types'
 
@@ -28,7 +28,6 @@ function LyricsCreate({ songId }: Props) {
       <h3>Add Lyrics</h3>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormRow>
-          <Label htmlFor="title">Song title</Label>
           <StyledInput type="text" id="content" {...register('content')} />
         </FormRow>
 

@@ -11,3 +11,11 @@ export const ADD_LYRICS = gql`
     }
   }
 `
+export const LIKE_LYRICS = gql`
+  mutation LikeLyrics($Id: ID!) {
+    likeLyrics(Id: $Id) {
+      id
+      likes
+    }
+  }
+`
