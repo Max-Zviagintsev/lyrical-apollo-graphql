@@ -16,9 +16,9 @@ const songResolvers = {
       }
     },
 
-    song: async (_: unknown, id: string): Promise<Song | null> => {
+    song: async (_: unknown, args: { id: string }): Promise<Song | null> => {
       try {
-        const objectId = new ObjectId(id);
+        const objectId = new ObjectId(args.id);
         const song = await SongModel.findById(objectId).populate('lyrics');
 
         if (!song) {
@@ -51,15 +51,17 @@ const songResolvers = {
       }
     },
 
-    deleteSong: async (_: unknown, id: string): Promise<string> => {
+    deleteSong: async (_: unknown, args: { id: string }): Promise<string> => {
       try {
-        const objectId = new ObjectId(id);
+        const objectId = new ObjectId(args.id);
         const result = await SongModel.findByIdAndDelete(objectId);
 
         if (!result) {
           throw new Error('Song not found');
         }
-        return id;
+
+        console.log('id', args.id);
+        return args.id;
       } catch (error) {
         console.error('Error deleting song:', error);
         throw new Error('Failed to delete song');

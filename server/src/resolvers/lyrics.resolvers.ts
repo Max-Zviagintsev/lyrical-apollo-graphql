@@ -6,9 +6,12 @@ const { ObjectId } = mongoose.Types;
 
 const lyricsResolvers = {
   Query: {
-    lyrics: async (_: unknown, id: string): Promise<Lyrics | null> => {
+    lyrics: async (
+      _: unknown,
+      args: { id: string }
+    ): Promise<Lyrics | null> => {
       try {
-        const objectId = new ObjectId(id);
+        const objectId = new ObjectId(args.id);
         const lyrics = await LyricsModel.findById(objectId).populate('song');
 
         if (!lyrics) {
@@ -24,9 +27,9 @@ const lyricsResolvers = {
   },
 
   Mutation: {
-    likeLyrics: async (_: unknown, id: string) => {
+    likeLyrics: async (_: unknown, args: { id: string }) => {
       try {
-        const objectId = new ObjectId(id);
+        const objectId = new ObjectId(args.id);
         const lyrics = await LyricsModel.findById(objectId);
 
         if (!lyrics) {

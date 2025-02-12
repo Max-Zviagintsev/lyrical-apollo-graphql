@@ -15,12 +15,13 @@ const SongDetails = () => {
   if (error) return <p>Error : {error.message}</p>
 
   const { title, lyrics } = data.song
+  const isLyricsExists = lyrics.length > 0
 
   return (
     <PageWrapper>
       <Heading>Song Details</Heading>
       <h3>{title}</h3>
-      {lyrics.content && <LyricsList lyrics={lyrics} />}
+      {isLyricsExists && <LyricsList lyrics={lyrics} />}
       <LyricsCreate songId={id} />
 
       <LinkButton to="/">Back</LinkButton>

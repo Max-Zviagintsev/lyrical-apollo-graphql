@@ -40,12 +40,30 @@ export const Button = styled.button`
   }
   cursor: pointer;
 `
-export const LyricsWrapper = styled.div`
+export const List = styled.ul`
+  list-style-type: none;
+  padding: 0;
+`
+export const ListItem = styled.li`
   display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  border-bottom: 1px solid var(--font-color);
+  padding: 10px 5px;
 `
 export const Text = styled.div`
   margin-right: 15px;
 `
+export const LikesWrapper = styled.div`
+  display: flex;
+`
 export const LikeIcon = styled(ThumbUpIcon)`
   color: var(--button-color);
+  cursor: pointer;
+`
+export const Likes = styled.div`
+  display: flex;
+  align-items: flex-end;
+  font-size: 14px;
+  margin-left: 5px;
 `

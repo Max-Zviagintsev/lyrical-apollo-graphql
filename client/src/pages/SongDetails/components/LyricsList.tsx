@@ -1,19 +1,38 @@
+import { useMutation } from '@apollo/client'
+import { LIKE_LYRICS } from '../../../api/mutations/lyricsMutations'
 import { Lyrics } from '../../../types'
-import { LyricsWrapper, Text, LikeIcon } from '../StyledComponents'
+import {
+  List,
+  ListItem,
+  Text,
+  LikesWrapper,
+  LikeIcon,
+  Likes,
+} from '../StyledComponents'
 
 interface Props {
-  lyrics: Lyrics
+  lyrics: Lyrics[]
 }
 
 function LyricsList({ lyrics }: Props) {
-  return (
-    <LyricsWrapper>
-      <Text>{lyrics.content}</Text>
-      <div>
-        <LikeIcon />
-      </div>
-    </LyricsWrapper>
-  )
+  const [likeLyrics] = useMutation(LIKE_LYRICS)
+
+  const handleLike = (id: string) => {
+    likeLyrics({ variables: { id } })
+  }
+
+  const listItems = lyrics.map(({ id, content, likes }: Lyrics) => (
+    <ListItem key={id}>
+      <Text>{content}</Text>
+
+      <LikesWrapper>
+        <LikeIcon onClick={() => handleLike(id)} />
+        <Likes>{likes}</Likes>
+      </LikesWrapper>
+    </ListItem>
+  ))
+
+  return <List>{listItems}</List>
 }
 
 export default LyricsList
