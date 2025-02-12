@@ -2,7 +2,7 @@ type Lyrics {
   id: ID!
   content: String!
   likes: Int
-  song: Song
+  song: Song!
 }
 
 type Mutation {

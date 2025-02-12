@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-const { Schema, model } = mongoose;
+const { Schema, model, Types } = mongoose;
 import { Lyrics } from '../types.ts';
 
 const lyricsSchema = new Schema<Lyrics>({
@@ -9,7 +9,15 @@ const lyricsSchema = new Schema<Lyrics>({
   },
   likes: {
     type: Number,
+    default: 0,
   },
+  song: [
+    {
+      type: Types.ObjectId,
+      ref: 'Song',
+      required: true,
+    },
+  ],
 });
 
 const LyricsModel = model<Lyrics>('Lyrics', lyricsSchema, 'lyrics');

@@ -9,13 +9,13 @@ const songResolvers = {
   Query: {
     songs: async (): Promise<Song[]> => {
       try {
-        const songs = await SongModel.find({}, { __v: 0 }).populate('lyrics');
-        return songs;
+        return await SongModel.find({}, { __v: 0 }).populate('lyrics');
       } catch (error) {
         console.error('Error fetching songs:', error);
         throw new Error('Failed to fetch songs');
       }
     },
+
     song: async (_: unknown, id: string): Promise<Song | null> => {
       try {
         const objectId = new ObjectId(id);
@@ -50,6 +50,7 @@ const songResolvers = {
         throw new Error('Failed to add song');
       }
     },
+
     deleteSong: async (_: unknown, id: string): Promise<string> => {
       try {
         const objectId = new ObjectId(id);
@@ -64,10 +65,11 @@ const songResolvers = {
         throw new Error('Failed to delete song');
       }
     },
+
     addLyrics: async (
       _: unknown,
       args: { songId: string; content: string }
-    ): Promise<Lyrics> => {
+    ): Promise<Song> => {
       try {
         const objectId = new ObjectId(args.songId);
         const song = await SongModel.findById(objectId);
@@ -75,15 +77,17 @@ const songResolvers = {
         if (!song) {
           throw new Error('Song not found');
         }
+
         const newLyrics = new LyricsModel({
           content: args.content,
-          song,
+          song: objectId,
         });
-        song.lyrics.push(newLyrics);
-
         const savedLyrics = await newLyrics.save();
+
+        song.lyrics.push(savedLyrics._id);
+
         await song.save();
-        return savedLyrics;
+        return await song.populate('lyrics');
       } catch (error) {
         console.error('Error adding lyrics:', error);
         throw new Error('Failed to add lyrics');

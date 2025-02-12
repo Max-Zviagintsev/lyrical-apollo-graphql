@@ -10,6 +10,6 @@ type Songs {
 
 type Mutation {
   addSong(title: String!): Song
-  deleteSong(id: ID!): Song
+  deleteSong(id: ID!): ID
   addLyrics(songId: ID!, content: String!): Song
 }

@@ -1,18 +1,14 @@
-export type ResolverParent = unknown;
-
-export type ResolverFunction<Args, ReturnType> = (
-  parent: ResolverParent,
-  args: Args
-) => ReturnType;
+import { Types } from 'mongoose';
 
 export interface Lyrics {
-  id: string;
+  _id: Types.ObjectId;
   content: string;
   likes?: number;
+  song: Types.ObjectId;
 }
 
 export interface Song {
-  id: string;
+  _id: Types.ObjectId;
   title: string;
-  lyrics: Lyrics[];
+  lyrics: Types.ObjectId[];
 }
